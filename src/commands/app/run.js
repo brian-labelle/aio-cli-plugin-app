@@ -35,17 +35,6 @@ class Run extends BaseCommand {
   async run () {
     // cli input
     const { flags } = await this.parse(Run)
-
-    if (flags.local) {
-      const [firstCpu] = os.cpus()
-      // note: the earliest versions of M1 macs return 'Apple processor' under model.
-      if (firstCpu?.model?.startsWith('Apple')) {
-        this.error('The --local flag is not supported on Apple Silicon Macs.')
-      } else {
-        this.warn('The --local flag is deprecated and will be removed in the next major release.')
-      }
-    }
-
     const spinner = ora()
 
     const runConfigs = await this.getAppExtConfigs(flags)
