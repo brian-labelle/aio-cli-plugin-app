@@ -67,7 +67,7 @@ async function runDevLocal (config, dataDir, log = () => undefined, verbose = fa
   // take following steps only when we have a backend
   log('checking if java is installed...')
   if (!await utils.hasJavaCLI()) {
-    throw new Error('could not find java CLI, please make sure java is installed')
+    //throw new Error('could not find java CLI, please make sure java is installed')
   }
 
   log('checking if docker is installed...')
@@ -86,22 +86,22 @@ async function runDevLocal (config, dataDir, log = () => undefined, verbose = fa
   }
 
   log('starting local OpenWhisk stack...')
-  const owLocalLogFile = OW_LOCAL_LOG_FILE || path.join(config.app.dist, 'openwhisk-local.log.txt')
-  const owExecaOptions = {
-    stdio: [
-      null, // stdin
-      verbose ? fs.openSync(owLocalLogFile, 'w') : null, // stdout
-      'inherit' // stderr
-    ]
-  }
-  const res = await utils.runOpenWhiskJar(owJarFile, OW_CONFIG_RUNTIMES_FILE, OW_LOCAL_APIHOST, OW_WAIT_INIT_TIME, OW_WAIT_PERIOD_TIME, OW_TIMEOUT, owExecaOptions)
+ const owLocalLogFile = OW_LOCAL_LOG_FILE || path.join(config.app.dist, 'openwhisk-local.log.txt')
+  // const owExecaOptions = {
+  //   stdio: [
+  //     null, // stdin
+  //     verbose ? fs.openSync(owLocalLogFile, 'w') : null, // stdout
+  //     'inherit' // stderr
+  //   ]
+  // }
+  //const res = await utils.runOpenWhiskJar(owJarFile, OW_CONFIG_RUNTIMES_FILE, OW_LOCAL_APIHOST, OW_WAIT_INIT_TIME, OW_WAIT_PERIOD_TIME, OW_TIMEOUT, owExecaOptions)
 
   log(`writing credentials to tmp wskdebug config '${devConfig.envFile}'`)
   await writeLocalEnvFile(devConfig, LOCAL_RUNTIME)
 
   const cleanup = () => {
     aioLogger.debug('stopping local OpenWhisk stack...')
-    res.proc.kill()
+    //res.proc.kill()
 
     aioLogger.debug('removing wskdebug tmp .env file...')
     if (fs.existsSync(devConfig.envFile)) {

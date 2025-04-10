@@ -27,22 +27,7 @@ function isWindowsOrMac () {
 
 /** @private */
 function owJarPath (owJarUrl) {
-  const { pathname } = new url.URL(owJarUrl)
-  const idx = pathname.indexOf('/openwhisk/')
-  let jarPath
-
-  if (idx === -1) {
-    jarPath = path.join('openwhisk', 'openwhisk-standalone.jar') // default path
-    aioLogger.warn(`Could not parse openwhisk jar path from ${owJarUrl}, using default ${jarPath}`)
-  } else {
-    jarPath = pathname
-      .substring(idx + 1) // skip initial forward slash
-      .split(path.posix.sep) // split on forward slashes
-      .join(path.sep) // join on os path separator (for Windows)
-    aioLogger.debug(`Parsed openwhisk jar path from ${owJarUrl}, using ${jarPath}`)
-  }
-
-  return jarPath
+  return 'openwhisk-standalone.jar'
 }
 
 /** @private */
